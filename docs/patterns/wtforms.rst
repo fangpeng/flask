@@ -8,7 +8,7 @@ will handle here.  If you find yourself in the situation of having many
 forms, you might want to give it a try.
 
 When you are working with WTForms you have to define your forms as classes
-first.  I recommend breaking up the application into multiple modules 
+first.  I recommend breaking up the application into multiple modules
 (:ref:`larger-applications`) for that and adding a separate module for the
 forms.
 
@@ -17,9 +17,9 @@ forms.
    The `Flask-WTF`_ extension expands on this pattern and adds a few
    handful little helpers that make working with forms and Flask more
    fun.  You can get it from `PyPI
-   <http://pypi.python.org/pypi/Flask-WTF>`_.
+   <https://pypi.python.org/pypi/Flask-WTF>`_.
 
-.. _Flask-WTF: http://packages.python.org/Flask-WTF/
+.. _Flask-WTF: http://pythonhosted.org/Flask-WTF/
 
 The Forms
 ---------
@@ -61,10 +61,10 @@ the code as necessary.
 Things to remember:
 
 1. create the form from the request :attr:`~flask.request.form` value if
-   the data is submitted via the HTTP `POST` method and
-   :attr:`~flask.request.args` if the data is submitted as `GET`.
+   the data is submitted via the HTTP ``POST`` method and
+   :attr:`~flask.request.args` if the data is submitted as ``GET``.
 2. to validate the data, call the :func:`~wtforms.form.Form.validate`
-   method which will return `True` if the data validates, `False`
+   method which will return ``True`` if the data validates, ``False``
    otherwise.
 3. to access individual values from the form, access `form.<NAME>.data`.
 
@@ -77,7 +77,7 @@ how easy this is.  WTForms does half the form generation for us already.
 To make it even nicer, we can write a macro that renders a field with
 label and a list of errors if there are any.
 
-Here's an example `_formhelpers.html` template with such a macro:
+Here's an example :file:`_formhelpers.html` template with such a macro:
 
 .. sourcecode:: html+jinja
 
@@ -100,10 +100,10 @@ arguments will be inserted as HTML attributes.  So for example you can
 call ``render_field(form.username, class='username')`` to add a class to
 the input element.  Note that WTForms returns standard Python unicode
 strings, so we have to tell Jinja2 that this data is already HTML escaped
-with the `|safe` filter.
+with the ``|safe`` filter.
 
-Here the `register.html` template for the function we used above which
-takes advantage of the `_formhelpers.html` template:
+Here the :file:`register.html` template for the function we used above which
+takes advantage of the :file:`_formhelpers.html` template:
 
 .. sourcecode:: html+jinja
 
@@ -122,5 +122,5 @@ takes advantage of the `_formhelpers.html` template:
 For more information about WTForms, head over to the `WTForms
 website`_.
 
-.. _WTForms: http://wtforms.simplecodes.com/
-.. _WTForms website: http://wtforms.simplecodes.com/
+.. _WTForms: http://wtforms.readthedocs.org/
+.. _WTForms website: http://wtforms.readthedocs.org/

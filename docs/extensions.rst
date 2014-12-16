@@ -8,8 +8,8 @@ Finding Extensions
 ------------------
 
 Flask extensions are listed on the `Flask Extension Registry`_ and can be
-downloaded with ``easy_install`` or ``pip``.  If you add a Flask extension
-as dependency to your ``requirements.rst`` or ``setup.py`` file they are
+downloaded with :command:`easy_install` or :command:`pip`.  If you add a Flask extension
+as dependency to your :file:`requirements.txt` or :file:`setup.py` file they are
 usually installed with a simple command or when your application installs.
 
 Using Extensions
@@ -45,4 +45,4 @@ Once the ``flaskext_compat`` module is activated the :data:`flask.ext` will
 exist and you can start importing from there.
 
 .. _Flask Extension Registry: http://flask.pocoo.org/extensions/
-.. _flaskext_compat.py: https://github.com/mitsuhiko/flask/raw/master/scripts/flaskext_compat.py
+.. _flaskext_compat.py: https://raw.githubusercontent.com/mitsuhiko/flask/master/scripts/flaskext_compat.py

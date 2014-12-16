@@ -93,9 +93,9 @@ class Config(dict):
             app.config.from_pyfile(os.environ['YOURAPPLICATION_SETTINGS'])
 
         :param variable_name: name of the environment variable
-        :param silent: set to `True` if you want silent failure for missing
+        :param silent: set to ``True`` if you want silent failure for missing
                        files.
-        :return: bool. `True` if able to load config, `False` otherwise.
+        :return: bool. ``True`` if able to load config, ``False`` otherwise.
         """
         rv = os.environ.get(variable_name)
         if not rv:
@@ -116,7 +116,7 @@ class Config(dict):
         :param filename: the filename of the config.  This can either be an
                          absolute filename or a filename relative to the
                          root path.
-        :param silent: set to `True` if you want silent failure for missing
+        :param silent: set to ``True`` if you want silent failure for missing
                        files.
 
         .. versionadded:: 0.7
@@ -167,13 +167,13 @@ class Config(dict):
 
     def from_json(self, filename, silent=False):
         """Updates the values in the config from a JSON file. This function
-        behaves as if the JSON object was a dictionary and passed ot the
-        :meth:`from_object` function.
+        behaves as if the JSON object was a dictionary and passed to the
+        :meth:`from_mapping` function.
 
         :param filename: the filename of the JSON file.  This can either be an
                          absolute filename or a filename relative to the
                          root path.
-        :param silent: set to `True` if you want silent failure for missing
+        :param silent: set to ``True`` if you want silent failure for missing
                        files.
 
         .. versionadded:: 1.0
@@ -188,12 +188,32 @@ class Config(dict):
                 return False
             e.strerror = 'Unable to load configuration file (%s)' % e.strerror
             raise
-        for key in obj.keys():
-            if key.isupper():
-                self[key] = obj[key]
+        return self.from_mapping(obj)
+
+    def from_mapping(self, *mapping, **kwargs):
+        """Updates the config like :meth:`update` ignoring items with non-upper
+        keys.
+
+        .. versionadded:: 1.0
+        """
+        mappings = []
+        if len(mapping) == 1:
+            if hasattr(mapping[0], 'items'):
+                mappings.append(mapping[0].items())
+            else:
+                mappings.append(mapping[0])
+        elif len(mapping) > 1:
+            raise TypeError(
+                'expected at most 1 positional argument, got %d' % len(mapping)
+            )
+        mappings.append(kwargs.items())
+        for mapping in mappings:
+            for (key, value) in mapping:
+                if key.isupper():
+                    self[key] = value
         return True
 
-    def get_namespace(self, namespace, lowercase=True):
+    def get_namespace(self, namespace, lowercase=True, trim_namespace=True):
         """Returns a dictionary containing a subset of configuration options
         that match the specified namespace/prefix. Example usage::
 
@@ -216,6 +236,8 @@ class Config(dict):
         :param namespace: a configuration namespace
         :param lowercase: a flag indicating if the keys of the resulting
                           dictionary should be lowercase
+        :param trim_namespace: a flag indicating if the keys of the resulting
+                          dictionary should not include the namespace
 
         .. versionadded:: 1.0
         """
@@ -223,7 +245,10 @@ class Config(dict):
         for k, v in iteritems(self):
             if not k.startswith(namespace):
                 continue
-            key = k[len(namespace):]
+            if trim_namespace:
+                key = k[len(namespace):]
+            else:
+                key = k
             if lowercase:
                 key = key.lower()
             rv[key] = v

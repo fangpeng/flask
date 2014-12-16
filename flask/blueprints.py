@@ -42,7 +42,7 @@ class BlueprintSetupState(object):
         if subdomain is None:
             subdomain = self.blueprint.subdomain
 
-        #: The subdomain that the blueprint should be active for, `None`
+        #: The subdomain that the blueprint should be active for, ``None``
         #: otherwise.
         self.subdomain = subdomain
 
@@ -91,8 +91,10 @@ class Blueprint(_PackageBoundObject):
 
     def __init__(self, name, import_name, static_folder=None,
                  static_url_path=None, template_folder=None,
-                 url_prefix=None, subdomain=None, url_defaults=None):
-        _PackageBoundObject.__init__(self, import_name, template_folder)
+                 url_prefix=None, subdomain=None, url_defaults=None,
+                 root_path=None):
+        _PackageBoundObject.__init__(self, import_name, template_folder,
+                                     root_path=root_path)
         self.name = name
         self.url_prefix = url_prefix
         self.subdomain = subdomain
